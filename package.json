@@ -1,7 +1,7 @@
 {
   "name": "c2wasm",
   "description": "compile c to wasm, the easy way",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/dominictarr/c2wasm",
   "repository": {
     "type": "git",
