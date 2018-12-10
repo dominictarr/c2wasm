@@ -2,21 +2,28 @@
 
 platform=$(uname -s | tr '[:upper:]' '[:lower:]')
 
-# I got a feeling osx doesn't come with readlink.
-# thanks: https://stackoverflow.com/a/17577143
-
-function readlink_crossplatform() {
-  (
-  cd $(dirname $1)         # or  cd ${1%/*}
-  echo $PWD/$(basename $1) # or  echo $PWD/${1##*/}
-  )
+function realpath {
+    local r=$1; local t=$(readlink $r)
+    while [ $t ]; do
+        r=$(cd $(dirname $r) && cd $(dirname $t) && pwd -P)/$(basename $t)
+        t=$(readlink $r)
+    done
+    echo $r
 }
 
-dir=$(dirname $(readlink_crossplatform $BASH_SOURCE))
+
+dir=$(dirname $(realpath $0))
+
+echo "DIR" $dir
 
 "$dir/$platform/dist/bin/clang" \
   --target=wasm32-unknown-unknown-wasm \
   --sysroot="$dir/$platform/sysroot" \
   -nostartfiles -Wl,--no-entry,--allow-undefined \
   "$@"
+
+
+
+
+
 
