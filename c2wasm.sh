@@ -16,7 +16,7 @@ dir=$(dirname $(realpath $0))
 
 echo "DIR" $dir
 
-"$dir/$platform/dist/bin/clang" \
+"$dir/$platform/dist/bin/clang-8" \
   --target=wasm32-unknown-unknown-wasm \
   --sysroot="$dir/$platform/sysroot" \
   -nostartfiles -Wl,--no-entry,--allow-undefined \
